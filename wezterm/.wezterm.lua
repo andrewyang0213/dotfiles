@@ -1,4 +1,5 @@
 -- Initialize Configuration
+-- TEST
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local opacity = 1
@@ -123,6 +124,7 @@ config.key_tables = {
 		resize_pane("l", "Right"),
 	},
 }
+
 
 -- Set leader key as CTRL A
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
