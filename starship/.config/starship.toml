@@ -47,9 +47,10 @@ format = '[$all_status]($style)'
 style = "fg:#1C3A5E bg:#FCF392"
 
 [git_metrics]
-format = "([+$added]($added_style))[]($added_style)"
+format = '(([ $added ]($added_style))([ $deleted ]($deleted_style)))'
+only_nonzero_diffs = true
 added_style = "fg:#1C3A5E bg:#FCF392"
-deleted_style = "fg:bright-red bg:235"
+deleted_style = "fg:#1C3A5E bg:#FCF392"
 disabled = false
 
 [hg_branch]
