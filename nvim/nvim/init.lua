@@ -279,7 +279,7 @@ require('lazy').setup({
     'github/copilot.vim',
     lazy = false,
     config = function() -- Mapping tab is already used in NvChad
-      vim.g.copilot_no_tab_map = true -- Disable tab mapping
+      -- vim.g.copilot_no_tab_map = true -- Disable tab mapping
       vim.g.copilot_assume_mapped = true -- Assume that the mapping is already done
     end,
   },
@@ -491,6 +491,9 @@ require('lazy').setup({
 
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
+
+      -- Omnisharp extended for C# LSP
+      { 'Hoffs/omnisharp-extended-lsp.nvim' },
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -623,6 +626,13 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
           end
+
+          if client and client.name == 'omnisharp' then
+            map('grd', require('omnisharp_extended').telescope_lsp_definition, '[G]oto [D]efinition')
+            map('grr', require('omnisharp_extended').telescope_lsp_references, '[G]oto [R]eferences')
+            map('gri', require('omnisharp_extended').telescope_lsp_implementation, '[G]oto [I]mplementation')
+            map('grt', require('omnisharp_extended').telescope_lsp_type_definition, 'Type [D]efinition')
+          end
         end,
       })
 
@@ -698,6 +708,26 @@ require('lazy').setup({
             },
           },
         },
+
+        -- csharp lsp
+        omnisharp = {
+          cmd = { 'dotnet', vim.fn.stdpath 'data' .. '/mason/packages/omnisharp/libexec/OmniSharp.dll', '--languageserver' },
+          root_markers = { '.sln', '.csproj', 'omnisharp.json', 'function.json' },
+          settings = {
+            FormattingOptions = {
+              EnableEditorConfigSupport = true,
+            },
+            MsBuild = {},
+            RenameOptions = {},
+            RoslynExtensionsOptions = {},
+            Sdk = {
+              IncludePrereleases = true,
+            },
+          },
+        },
+
+        -- xml formatting
+        lemminx = {},
       }
 
       -- Ensure the servers and tools above are installed
